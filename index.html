@@ -1,0 +1,2134 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#e2231a" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Penndex – la mia collezione di penne cancellabili</title>
+    <script>
+      try {
+        if (localStorage.getItem("penndex:theme") === "dark")
+          document.documentElement.setAttribute("data-theme", "dark");
+      } catch (e) {}
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Fredoka:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --paper: #ffffff;
+        --ink: #1d1d1b;
+        --muted: #6b6b6b;
+        --line: #e6e6e6;
+        --surface: #f6f6f6;
+        --accent: #e2231a;
+        --accent-soft: #fdeceb;
+        --on-accent: #ffffff;
+        --danger: #b3150e;
+        --backdrop: rgba(29, 29, 27, 0.45);
+        --display:
+          "Fredoka", "Baloo 2", "Arial Rounded MT Bold", "Trebuchet MS",
+          system-ui, sans-serif;
+        --body:
+          "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica,
+          Arial, sans-serif;
+        color-scheme: light;
+        box-sizing: border-box;
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      :root[data-theme="dark"] {
+        --paper: #161616;
+        --ink: #f2f2f0;
+        --muted: #a3a3a0;
+        --line: #2e2e2e;
+        --surface: #222222;
+        --accent: #ff4136;
+        --accent-soft: rgba(255, 65, 54, 0.16);
+        --on-accent: #ffffff;
+        --danger: #ff6b61;
+        --backdrop: rgba(0, 0, 0, 0.6);
+        --tick-off: #5a5a5a;
+        color-scheme: dark;
+      }
+      :root[data-theme="dark"] .art {
+        filter: brightness(0.92);
+      }
+      :root[data-theme="dark"] .is-missing .art {
+        filter: grayscale(1) brightness(0.75);
+        opacity: 0.55;
+      }
+      :root[data-theme="dark"] .fab {
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+      }
+      :root[data-theme="dark"] .toast {
+        background: #f2f2f0;
+        color: #161616;
+      }
+      .switch-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        width: 100%;
+        min-height: 56px;
+        padding: 8px 6px 8px 18px;
+        border: 1.5px solid var(--line);
+        border-radius: 20px;
+        background: var(--paper);
+        font-weight: 700;
+        font-size: 0.9375rem;
+        text-align: left;
+      }
+      .switch {
+        flex: none;
+        position: relative;
+        width: 52px;
+        height: 30px;
+        border-radius: 999px;
+        background: var(--line);
+        transition: background 0.2s;
+      }
+      .switch::after {
+        content: "";
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: #fff;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+        transition: transform 0.2s;
+      }
+      .switch-row[aria-checked="true"] .switch {
+        background: var(--accent);
+      }
+      .switch-row[aria-checked="true"] .switch::after {
+        transform: translateX(22px);
+      }
+      .menu h3 {
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: 1.0625rem;
+        margin: 22px 0 8px;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 140px);
+        -webkit-text-size-adjust: 100%;
+      }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font: 400 1rem/1.5 var(--body);
+        -webkit-font-smoothing: antialiased;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0 0 auto;
+        height: env(safe-area-inset-top, 0px);
+        z-index: 10;
+        background: var(--paper);
+      }
+      img {
+        max-width: 100%;
+      }
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+        color: inherit;
+      }
+      button {
+        cursor: pointer;
+      }
+      :focus-visible {
+        outline: 2.5px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .wrap {
+        width: 100%;
+        max-width: 1440px;
+        margin-inline: auto;
+        padding-inline: 16px;
+      }
+      @media (min-width: 900px) {
+        .wrap {
+          padding-inline: 32px;
+        }
+      }
+
+      /* Striscia nera in stile negozio */
+      .strip {
+        background: var(--accent);
+        color: var(--on-accent);
+        text-align: center;
+        font-size: 0.8125rem;
+        font-weight: 500;
+        padding: 9px 16px;
+        line-height: 1.3;
+      }
+
+      /* Testata */
+      .top {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 12px;
+        padding-top: 22px;
+      }
+      .top h1 {
+        color: var(--accent);
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: clamp(2.4rem, 11vw, 4rem);
+        line-height: 0.95;
+        letter-spacing: -0.015em;
+        margin: 0;
+      }
+      .top p {
+        margin: 6px 0 0;
+        color: var(--muted);
+        font-size: 0.9375rem;
+      }
+      .icon-btn {
+        flex: none;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 1.5px solid var(--line);
+        background: var(--paper);
+        display: grid;
+        place-items: center;
+      }
+      .icon-btn svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      /* Cartuccia d’inchiostro: la barra di avanzamento */
+      .progress {
+        padding: 18px 0 6px;
+      }
+      .cartridge {
+        position: relative;
+        height: 26px;
+        margin-right: 14px;
+        border: 2px solid var(--ink);
+        border-radius: 999px 8px 8px 999px;
+        overflow: hidden;
+        background: var(--surface);
+      }
+      .cartridge::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: -2px;
+        width: 0;
+        height: 0;
+      }
+      .cartridge-wrap {
+        position: relative;
+      }
+      .cartridge-wrap::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        border-left: 14px solid var(--ink);
+        border-top: 7px solid transparent;
+        border-bottom: 7px solid transparent;
+      }
+      .cartridge-fill {
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 0;
+        background: var(--accent);
+        border-right: 2px solid var(--ink);
+        transition: width 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+      .cartridge-fill[data-empty] {
+        border-right: 0;
+      }
+      .count {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin: 10px 0 0;
+        font-size: 0.9375rem;
+        color: var(--muted);
+      }
+      .count b {
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: 1.75rem;
+        color: var(--ink);
+        margin-right: 4px;
+      }
+
+      /* Schede di navigazione */
+      .tabs {
+        display: flex;
+        gap: 6px;
+        padding: 14px 0 4px;
+      }
+      .tab {
+        flex: 1;
+        max-width: 220px;
+        min-height: 44px;
+        border-radius: 999px;
+        border: 1.5px solid var(--line);
+        background: transparent;
+        font-weight: 700;
+        font-size: 0.9375rem;
+      }
+      .tab[aria-selected="true"] {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: var(--on-accent);
+      }
+
+      /* Barra strumenti */
+      .toolbar {
+        position: sticky;
+        top: env(safe-area-inset-top, 0px);
+        z-index: 5;
+        background: var(--paper);
+        padding: 10px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .search {
+        position: relative;
+      }
+      .search svg {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 18px;
+        height: 18px;
+        color: var(--muted);
+        pointer-events: none;
+      }
+      .search input {
+        width: 100%;
+        min-height: 44px;
+        border-radius: 999px;
+        border: 1.5px solid var(--line);
+        background: var(--surface);
+        padding: 10px 16px 10px 42px;
+        font-size: 1rem;
+      }
+      .search input:focus {
+        border-color: var(--accent);
+        outline: none;
+      }
+      .filters {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        margin-top: 10px;
+        overflow-x: auto;
+        scrollbar-width: none;
+        padding-bottom: 2px;
+      }
+      .filters::-webkit-scrollbar {
+        display: none;
+      }
+      .chip {
+        flex: none;
+        min-height: 36px;
+        padding: 6px 14px;
+        border-radius: 999px;
+        border: 1.5px solid var(--line);
+        background: var(--paper);
+        font-size: 0.875rem;
+        font-weight: 500;
+        white-space: nowrap;
+      }
+      .chip span {
+        color: var(--muted);
+        margin-left: 4px;
+        font-weight: 400;
+      }
+      .chip[aria-pressed="true"] {
+        border-color: var(--accent);
+        background: var(--accent);
+        color: var(--on-accent);
+      }
+      .chip[aria-pressed="true"] span {
+        color: inherit;
+        opacity: 0.7;
+      }
+      .sort {
+        flex: none;
+        margin-left: auto;
+        min-height: 36px;
+        border-radius: 999px;
+        border: 1.5px solid var(--line);
+        background: var(--paper);
+        padding: 4px 12px;
+        font-size: 0.875rem;
+      }
+
+      /* Griglia penne */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px 12px;
+        padding: 18px 0 40px;
+        margin: 0;
+        list-style: none;
+      }
+      @media (min-width: 600px) {
+        .grid {
+          grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+          gap: 28px 20px;
+        }
+      }
+      .card {
+        position: relative;
+      }
+      .card-open {
+        display: block;
+        width: 100%;
+        padding: 0;
+        border: 0;
+        background: none;
+        text-align: left;
+      }
+      .art {
+        position: relative;
+        aspect-ratio: 1/1;
+        border-radius: 20px;
+        background: var(--bg);
+        overflow: hidden;
+        display: grid;
+        place-items: center;
+        transition:
+          filter 0.45s ease,
+          opacity 0.45s ease;
+      }
+      .art svg {
+        width: 88%;
+        height: 88%;
+        overflow: visible;
+      }
+      .art img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        background: var(--bg);
+      }
+      .is-missing .art {
+        filter: grayscale(1) contrast(0.92);
+        opacity: 0.5;
+      }
+      .card-body {
+        padding: 10px 2px 0;
+      }
+      .num {
+        font-family: var(--display);
+        font-weight: 500;
+        font-size: 0.8125rem;
+        color: var(--accent);
+        letter-spacing: 0.02em;
+      }
+      .card h3 {
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: 1.125rem;
+        line-height: 1.15;
+        margin: 2px 0 0;
+      }
+      .animal {
+        font-size: 0.8125rem;
+        color: var(--muted);
+        margin: 2px 0 0;
+      }
+      .motto {
+        font-size: 0.8125rem;
+        color: var(--muted);
+        margin: 2px 0 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .where {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+        font-size: 0.8125rem;
+        font-weight: 500;
+        margin: 6px 0 0;
+        color: var(--ink);
+      }
+      .where svg {
+        width: 14px;
+        height: 14px;
+        flex: none;
+        color: var(--accent);
+      }
+      .where span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .tick {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid var(--line);
+        background: var(--paper);
+        color: var(--tick-off, #c9c9c9);
+        display: grid;
+        place-items: center;
+        transition:
+          background 0.2s,
+          color 0.2s,
+          transform 0.2s;
+      }
+      .tick svg {
+        width: 20px;
+        height: 20px;
+      }
+      .is-owned .tick {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: var(--on-accent);
+      }
+      .tick:active {
+        transform: scale(0.9);
+      }
+      .empty {
+        grid-column: 1/-1;
+        text-align: center;
+        padding: 48px 16px;
+        color: var(--muted);
+      }
+      .empty b {
+        display: block;
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: 1.25rem;
+        color: var(--ink);
+        margin-bottom: 6px;
+      }
+      .link-btn {
+        border: 0;
+        background: none;
+        padding: 8px;
+        text-decoration: underline;
+        font-weight: 700;
+        min-height: 44px;
+      }
+
+      /* Diario dei ricordi */
+      .memories {
+        padding: 18px 0 40px;
+      }
+      .places {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 0 0 28px;
+      }
+      .places h2,
+      .month h2 {
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: 1.25rem;
+        margin: 0 0 10px;
+        width: 100%;
+      }
+      .month {
+        margin-bottom: 28px;
+      }
+      .month h2::first-letter {
+        text-transform: uppercase;
+      }
+      .moments {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 10px;
+      }
+      @media (min-width: 760px) {
+        .moments {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      .moment {
+        display: flex;
+        gap: 14px;
+        width: 100%;
+        align-items: center;
+        padding: 10px;
+        border: 1.5px solid var(--line);
+        border-radius: 20px;
+        background: var(--paper);
+        text-align: left;
+      }
+      .moment .art {
+        width: 76px;
+        flex: none;
+        border-radius: 14px;
+      }
+      .moment h3 {
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: 1.0625rem;
+        margin: 0;
+      }
+      .moment p {
+        margin: 2px 0 0;
+        font-size: 0.875rem;
+        color: var(--muted);
+      }
+      .moment .note {
+        color: var(--ink);
+        font-size: 0.875rem;
+        margin-top: 4px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      /* Pulsante flottante */
+      .fab {
+        position: fixed;
+        right: 16px;
+        bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+        z-index: 6;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 52px;
+        padding: 0 22px 0 18px;
+        border-radius: 999px;
+        border: 0;
+        background: var(--accent);
+        color: var(--on-accent);
+        font-weight: 700;
+        font-size: 0.9375rem;
+        box-shadow: 0 6px 20px rgba(226, 35, 26, 0.3);
+      }
+      .fab svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      /* Foglio di dettaglio */
+      dialog {
+        border: 0;
+        padding: 0;
+        background: var(--paper);
+        color: var(--ink);
+      }
+      dialog::backdrop {
+        background: var(--backdrop);
+      }
+      .sheet {
+        width: 100%;
+        max-width: 100%;
+        max-height: 92dvh;
+        margin: auto 0 0;
+        border-radius: 28px 28px 0 0;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+      }
+      .sheet[open] {
+        animation: rise 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+      @keyframes rise {
+        from {
+          transform: translateY(40px);
+          opacity: 0;
+        }
+        to {
+          transform: none;
+          opacity: 1;
+        }
+      }
+      @media (min-width: 720px) {
+        .sheet {
+          margin: auto;
+          max-width: 560px;
+          border-radius: 28px;
+          max-height: 88vh;
+        }
+      }
+      .sheet-in {
+        padding: 0 20px calc(28px + env(safe-area-inset-bottom, 0px));
+      }
+      .sheet-head {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 0 6px;
+        background: var(--paper);
+      }
+      .grab {
+        width: 42px;
+        height: 5px;
+        border-radius: 5px;
+        background: var(--line);
+      }
+      .sheet-head .icon-btn {
+        position: absolute;
+        right: 0;
+        top: 8px;
+      }
+      .sheet .art {
+        max-width: 300px;
+        margin: 6px auto 0;
+        border-radius: 26px;
+      }
+      .sheet .meta {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        align-items: center;
+        margin-top: 16px;
+      }
+      .pill {
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 3px 10px;
+        border-radius: 999px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+      }
+      .sheet h2 {
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: 2rem;
+        line-height: 1.05;
+        text-align: center;
+        margin: 6px 0 0;
+      }
+      .sheet .sub {
+        text-align: center;
+        color: var(--muted);
+        margin: 4px 0 0;
+      }
+      .desc {
+        max-width: 46ch;
+        margin: 14px auto 0;
+        text-align: center;
+        line-height: 1.55;
+        font-size: 0.9375rem;
+      }
+      .own-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        min-height: 54px;
+        margin: 20px 0 6px;
+        border-radius: 999px;
+        border: 2px solid var(--accent);
+        background: var(--accent);
+        color: var(--on-accent);
+        font-weight: 700;
+        font-size: 1rem;
+      }
+      .own-btn svg {
+        width: 20px;
+        height: 20px;
+      }
+      .own-btn[aria-pressed="true"] {
+        background: var(--accent-soft);
+        color: var(--accent);
+      }
+      .own-hint {
+        text-align: center;
+        font-size: 0.8125rem;
+        color: var(--muted);
+        margin: 0 0 4px;
+      }
+      .section {
+        margin-top: 24px;
+        padding-top: 20px;
+        border-top: 1px solid var(--line);
+      }
+      .section > h3 {
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: 1.25rem;
+        margin: 0 0 4px;
+      }
+      .section > p {
+        margin: 0 0 14px;
+        color: var(--muted);
+        font-size: 0.875rem;
+      }
+      .field {
+        display: block;
+        margin-bottom: 14px;
+      }
+      .field > span {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+      .field input,
+      .field textarea,
+      .field select {
+        width: 100%;
+        min-height: 46px;
+        border-radius: 14px;
+        border: 1.5px solid var(--line);
+        background: var(--surface);
+        padding: 10px 14px;
+        font-size: 1rem;
+      }
+      .field textarea {
+        min-height: 96px;
+        resize: vertical;
+        line-height: 1.45;
+      }
+      .field input:focus,
+      .field textarea:focus,
+      .field select:focus {
+        border-color: var(--accent);
+        outline: none;
+      }
+      .field input[type="color"] {
+        padding: 4px;
+        height: 46px;
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .btns {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .btn {
+        min-height: 44px;
+        padding: 8px 18px;
+        border-radius: 999px;
+        border: 1.5px solid var(--ink);
+        background: var(--paper);
+        font-weight: 700;
+        font-size: 0.9375rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .btn.primary {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: var(--on-accent);
+      }
+      .btn.danger {
+        border-color: var(--danger);
+        color: var(--danger);
+      }
+      .btn input[type="file"] {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        pointer-events: none;
+      }
+      .saved {
+        font-size: 0.8125rem;
+        color: var(--muted);
+        text-align: center;
+        margin: 18px 0 0;
+        min-height: 1.2em;
+      }
+
+      /* Menu */
+      .menu {
+        width: min(92vw, 420px);
+        border-radius: 24px;
+      }
+      .menu .sheet-in {
+        padding-top: 8px;
+      }
+      .menu-list {
+        display: grid;
+        gap: 8px;
+        margin-top: 8px;
+      }
+      .menu-list .btn {
+        justify-content: flex-start;
+        width: 100%;
+      }
+      .menu small {
+        display: block;
+        color: var(--muted);
+        margin-top: 14px;
+        font-size: 0.8125rem;
+        line-height: 1.45;
+      }
+
+      .toast {
+        position: fixed;
+        left: 50%;
+        bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+        transform: translate(-50%, 20px);
+        z-index: 20;
+        background: var(--ink);
+        color: var(--paper);
+        padding: 12px 18px;
+        border-radius: 999px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        max-width: calc(100vw - 32px);
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          opacity 0.25s,
+          transform 0.25s;
+        text-align: center;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+      footer {
+        color: var(--muted);
+        font-size: 0.8125rem;
+        padding-bottom: 110px;
+        text-align: center;
+      }
+      footer p {
+        margin: 0;
+        padding-top: 12px;
+        border-top: 1px solid var(--line);
+      }
+      .vh {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+      [hidden] {
+        display: none !important;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation: none !important;
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="strip" id="strip" role="status">Buona caccia alle penne!</div>
+
+    <header class="wrap">
+      <div class="top">
+        <div>
+          <h1>Penndex</h1>
+          <p>La mia collezione di penne cancellabili Legami</p>
+        </div>
+        <button class="icon-btn" data-action="menu" aria-label="Impostazioni">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          >
+            <path d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="progress">
+        <div class="cartridge-wrap">
+          <div
+            class="cartridge"
+            role="progressbar"
+            id="bar"
+            aria-label="Penne trovate"
+            aria-valuemin="0"
+          >
+            <div class="cartridge-fill" id="fill" data-empty></div>
+          </div>
+        </div>
+        <p class="count">
+          <span><b id="ownedN">0</b> di <span id="totalN">0</span> trovate</span
+          ><span id="pct">0%</span>
+        </p>
+      </div>
+
+      <div class="tabs" role="tablist">
+        <button
+          class="tab"
+          role="tab"
+          data-tab="collection"
+          aria-selected="true"
+          aria-controls="viewCollection"
+        >
+          Collezione
+        </button>
+        <button
+          class="tab"
+          role="tab"
+          data-tab="memories"
+          aria-selected="false"
+          aria-controls="viewMemories"
+        >
+          Ricordi
+        </button>
+      </div>
+    </header>
+
+    <section id="viewCollection" role="tabpanel">
+      <div class="toolbar">
+        <div class="wrap">
+          <label class="search">
+            <span class="vh">Cerca</span>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            >
+              <circle cx="11" cy="11" r="7" />
+              <path d="m20 20-3.5-3.5" />
+            </svg>
+            <input
+              id="q"
+              type="search"
+              placeholder="Cerca per animale, frase o negozio"
+              autocomplete="off"
+            />
+          </label>
+          <div class="filters">
+            <button class="chip" data-filter="all" aria-pressed="true">
+              Tutte<span id="cAll"></span>
+            </button>
+            <button class="chip" data-filter="owned" aria-pressed="false">
+              Ce l’ho<span id="cOwned"></span>
+            </button>
+            <button class="chip" data-filter="missing" aria-pressed="false">
+              Mi mancano<span id="cMissing"></span>
+            </button>
+            <select class="sort" id="sort" aria-label="Ordina">
+              <option value="num">Per numero</option>
+              <option value="name">Per nome</option>
+              <option value="date">Ultime trovate</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="wrap"><ul class="grid" id="grid"></ul></div>
+    </section>
+
+    <section id="viewMemories" role="tabpanel" hidden>
+      <div class="wrap"><div class="memories" id="memories"></div></div>
+    </section>
+
+    <footer>
+      <div class="wrap"><p>Made with ♥ by Jack</p></div>
+    </footer>
+
+    <button class="fab" data-action="new">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.4"
+        stroke-linecap="round"
+      >
+        <path d="M12 5v14M5 12h14" />
+      </svg>
+      Aggiungi penna
+    </button>
+
+    <dialog class="sheet" id="sheet" aria-labelledby="sheetTitle">
+      <div class="sheet-in" id="sheetIn"></div>
+    </dialog>
+
+    <dialog class="menu" id="menu" aria-labelledby="menuTitle">
+      <div class="sheet-in">
+        <div class="sheet-head">
+          <span class="grab"></span
+          ><button class="icon-btn" data-close aria-label="Chiudi">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            >
+              <path d="M6 6l12 12M18 6 6 18" />
+            </svg>
+          </button>
+        </div>
+        <h2
+          id="menuTitle"
+          style="font-family: var(--display); font-weight: 600; margin: 4px 0 0"
+        >
+          Impostazioni
+        </h2>
+        <h3>Aspetto</h3>
+        <button
+          class="switch-row"
+          role="switch"
+          id="themeSwitch"
+          aria-checked="false"
+          data-action="theme"
+        >
+          Tema scuro<span class="switch" aria-hidden="true"></span>
+        </button>
+        <h3>Backup</h3>
+        <div class="menu-list" style="margin-top: 0">
+          <button class="btn" data-action="export">
+            Scarica il backup (.json)
+          </button>
+          <label class="btn" style="position: relative"
+            >Ripristina da un backup<input
+              type="file"
+              id="importFile"
+              accept="application/json,.json"
+          /></label>
+          <button class="btn danger" data-action="reset">
+            Svuota la collezione
+          </button>
+        </div>
+        <small
+          >I dati restano solo in questo browser. Scarica un backup ogni tanto e
+          usalo per spostare la collezione su un altro dispositivo.</small
+        >
+      </div>
+    </dialog>
+
+    <div class="toast" id="toast" aria-live="polite"></div>
+
+    <script>
+      (function () {
+        "use strict";
+
+        /* ---------- Catalogo di partenza (legami.com, ottobre 2026) ---------- */
+        const CATALOG = [
+          {
+            id: "koala",
+            name: "Koala",
+            animal: "Koala",
+            emoji: "🐨",
+            motto: "Sleeping la Vida Loca",
+            type: "Penna",
+            bg: "#DCE6EE",
+            deep: "#7C93A8",
+            desc: "Penna cancellabile con il koala dormiglione in cima e la frase “Sleeping la Vida Loca” sul fusto. L’inchiostro termosensibile sparisce strofinando con la gommina.",
+          },
+          {
+            id: "hen",
+            name: "Hen",
+            animal: "Gallina",
+            emoji: "🐔",
+            motto: "I Care a Lot",
+            type: "Gel",
+            bg: "#FBE7D6",
+            deep: "#E07A4F",
+            desc: "Penna gel cancellabile con la gallina premurosa e la frase “I Care a Lot”. Scrive fluida e si corregge senza bianchetto.",
+          },
+          {
+            id: "gorilla",
+            name: "Gorilla",
+            animal: "Gorilla",
+            emoji: "🦍",
+            motto: "Wild but Kind",
+            type: "Gel",
+            bg: "#E4E2EB",
+            deep: "#5E5873",
+            desc: "Penna gel cancellabile con il gorilla dal cuore tenero e la frase “Wild but Kind”. Ricaricabile con i refill Legami.",
+          },
+          {
+            id: "fur-ever-friends",
+            name: "Fur-ever Friends",
+            animal: "Amici pelosi",
+            emoji: "🐾",
+            motto: "Set di 3 penne",
+            type: "Set da 3",
+            bg: "#F4E4D6",
+            deep: "#B9825A",
+            desc: "Set di tre penne cancellabili dedicate agli amici a quattro zampe, ognuna con il suo animaletto e la sua frase.",
+          },
+          {
+            id: "farm-sweet-farm",
+            name: "Farm Sweet Farm",
+            animal: "Animali della fattoria",
+            emoji: "🐮",
+            motto: "Set di 4 penne",
+            type: "Set da 4",
+            bg: "#E3F0D6",
+            deep: "#6FA34A",
+            desc: "Set di quattro penne cancellabili con gli animali della fattoria. Un modo veloce per allargare la collezione.",
+          },
+          {
+            id: "ladybug",
+            name: "Ladybug",
+            animal: "Coccinella",
+            emoji: "🐞",
+            motto: "Get Lucky",
+            type: "Penna",
+            bg: "#FBDAD7",
+            deep: "#D9443A",
+            desc: "Penna cancellabile con la coccinella portafortuna e la frase “Get Lucky”. Gli errori si cancellano strofinando con la gommina.",
+          },
+          {
+            id: "monster",
+            name: "Monster",
+            animal: "Mostriciattolo",
+            emoji: "👾",
+            motto: "Aaargh-dorable",
+            type: "Penna",
+            bg: "#DDF1E6",
+            deep: "#3FA676",
+            desc: "Penna cancellabile con il mostriciattolo più tenero che ci sia e la frase “Aaargh-dorable”.",
+          },
+          {
+            id: "teddy-bear",
+            name: "Teddy Bear",
+            animal: "Orsetto",
+            emoji: "🧸",
+            motto: "Dream Big",
+            type: "Gel",
+            bg: "#F1E3D3",
+            deep: "#A9774C",
+            desc: "Penna gel cancellabile con l’orsetto sognatore e la frase “Dream Big”. Inchiostro termosensibile e ricaricabile.",
+          },
+          {
+            id: "spooky-party",
+            name: "Spooky Party",
+            animal: "Halloween, blind box",
+            emoji: "🎃",
+            motto: "Penna a sorpresa",
+            type: "Blind box",
+            bg: "#FCE2C9",
+            deep: "#F08A24",
+            desc: "Penna cancellabile a sorpresa della collezione Halloween: scopri quale personaggio ti è capitato solo aprendo la scatolina.",
+          },
+          {
+            id: "bee",
+            name: "Bee",
+            animal: "Ape",
+            emoji: "🐝",
+            motto: "Bee Different",
+            type: "Gel",
+            bg: "#FFF2C2",
+            deep: "#E2AE00",
+            desc: "Penna gel cancellabile con l’ape e la frase “Bee Different”. Per scrivere, cancellare e ricominciare quante volte vuoi.",
+          },
+          {
+            id: "kitty",
+            name: "Kitty",
+            animal: "Gattino",
+            emoji: "🐱",
+            motto: "Be Curious",
+            type: "Gel",
+            bg: "#F7DEE7",
+            deep: "#E07EA0",
+            desc: "Penna gel cancellabile con il gattino curioso e la frase “Be Curious”. Ricaricabile con i refill Legami.",
+          },
+          {
+            id: "llama",
+            name: "Llama",
+            animal: "Lama",
+            emoji: "🦙",
+            motto: "No Probllama",
+            type: "Penna",
+            bg: "#F0E7F7",
+            deep: "#A982C9",
+            desc: "Penna cancellabile con il lama tranquillo e la frase “No Probllama”: con un errore non c’è nessun problema.",
+          },
+          {
+            id: "butterfly",
+            name: "Butterfly",
+            animal: "Farfalla",
+            emoji: "🦋",
+            motto: "You Are Beautiful",
+            type: "Gel",
+            bg: "#E5E1FA",
+            deep: "#7C6BE0",
+            desc: "Penna gel cancellabile con la farfalla e la frase “You Are Beautiful”. Inchiostro termosensibile che si cancella con la gommina.",
+          },
+          {
+            id: "shark",
+            name: "Shark",
+            animal: "Squalo",
+            emoji: "🦈",
+            motto: "Shark Attack",
+            type: "Gel",
+            bg: "#D8ECF7",
+            deep: "#3D8EC2",
+            desc: "Penna gel cancellabile con lo squalo e la frase “Shark Attack”, per dare un morso agli errori.",
+          },
+          {
+            id: "hippo",
+            name: "Hippo",
+            animal: "Ippopotamo",
+            emoji: "🦛",
+            motto: "Hip Hippo Hooray!",
+            type: "Penna",
+            bg: "#EADFF2",
+            deep: "#9479B8",
+            desc: "Penna cancellabile con l’ippopotamo festaiolo e la frase “Hip Hippo Hooray!”.",
+          },
+          {
+            id: "dino",
+            name: "Dino",
+            animal: "Dinosauro",
+            emoji: "🦖",
+            motto: "Rooarrr!",
+            type: "Penna",
+            bg: "#DDF0D8",
+            deep: "#57A84B",
+            desc: "Penna cancellabile con il dinosauro ruggente e la frase “Rooarrr!”. Gli errori spariscono strofinando con la gommina.",
+          },
+          {
+            id: "penguin",
+            name: "Penguin",
+            animal: "Pinguino",
+            emoji: "🐧",
+            motto: "Always Cool",
+            type: "Gel",
+            bg: "#DFE7F2",
+            deep: "#3E5578",
+            desc: "Penna gel cancellabile con il pinguino e la frase “Always Cool”. Ricaricabile con i refill Legami.",
+          },
+          {
+            id: "bunny",
+            name: "Bunny",
+            animal: "Coniglietto",
+            emoji: "🐰",
+            motto: "Don’t Worry Be Hoppy",
+            type: "Gel",
+            bg: "#FBE4EC",
+            deep: "#EE8FB0",
+            desc: "Penna gel cancellabile con il coniglietto e la frase “Don’t Worry Be Hoppy”. Inchiostro termosensibile e ricaricabile.",
+          },
+          {
+            id: "giraffe",
+            name: "Giraffe",
+            animal: "Giraffa",
+            emoji: "🦒",
+            motto: "Head In The Clouds",
+            type: "Gel",
+            bg: "#FFF0CF",
+            deep: "#E2A63B",
+            desc: "Penna gel cancellabile con la giraffa sognatrice e la frase “Head In The Clouds”.",
+          },
+          {
+            id: "panda",
+            name: "Panda",
+            animal: "Panda",
+            emoji: "🐼",
+            motto: "Hug Me",
+            type: "Gel",
+            bg: "#ECECEA",
+            deep: "#3A3A3A",
+            desc: "Penna gel cancellabile con il panda e la frase “Hug Me”. Inchiostro nero termosensibile, punta da 0,7 mm e gommina in cima.",
+          },
+          {
+            id: "tiger",
+            name: "Tiger",
+            animal: "Tigre",
+            emoji: "🐯",
+            motto: "Grrreat Adventure",
+            type: "Gel",
+            bg: "#FFE6CC",
+            deep: "#F28C28",
+            desc: "Penna gel cancellabile con la tigre e la frase “Grrreat Adventure”. Ricaricabile con i refill Legami.",
+          },
+          {
+            id: "flowers",
+            name: "Flowers",
+            animal: "Fiori",
+            emoji: "🌼",
+            motto: "Make Mistakes",
+            type: "3 colori",
+            bg: "#FFF4D1",
+            deep: "#E9A400",
+            desc: "Penna gel cancellabile tre colori in una, decorata a fiori e con la frase “Make Mistakes”. Scegli il colore con lo scatto.",
+          },
+          {
+            id: "unicorn",
+            name: "Unicorn",
+            animal: "Unicorno",
+            emoji: "🦄",
+            motto: "Believe In Magic",
+            type: "Gel",
+            bg: "#F6E3F7",
+            deep: "#C77DD6",
+            desc: "Penna gel cancellabile con l’unicorno e la frase “Believe In Magic”. Gli errori svaniscono come per magia.",
+          },
+          {
+            id: "travel",
+            name: "Travel",
+            animal: "Viaggio",
+            emoji: "✈️",
+            motto: "Make Mistakes",
+            type: "3 colori",
+            bg: "#DCEFF2",
+            deep: "#2C9AA8",
+            desc: "Penna gel cancellabile tre colori in una a tema viaggio, con la frase “Make Mistakes”. Pratica per appunti e diari di bordo.",
+          },
+        ];
+
+        /* ---------- Stato e salvataggio ---------- */
+        const KEY = "penndex:v1";
+        function load() {
+          try {
+            const raw = localStorage.getItem(KEY);
+            if (raw) {
+              const d = JSON.parse(raw);
+              return {
+                entries:
+                  d && typeof d.entries === "object" && d.entries
+                    ? d.entries
+                    : {},
+                custom: Array.isArray(d.custom) ? d.custom : [],
+              };
+            }
+          } catch (e) {}
+          return { entries: {}, custom: [] };
+        }
+        let state = load();
+        function save() {
+          try {
+            localStorage.setItem(KEY, JSON.stringify(state));
+            return true;
+          } catch (e) {
+            toast(
+              "Memoria piena: usa una foto più piccola o rimuovine qualcuna.",
+            );
+            return false;
+          }
+        }
+        let saveTimer;
+        function queueSave() {
+          clearTimeout(saveTimer);
+          saveTimer = setTimeout(() => {
+            if (save()) setSaved("Salvato");
+          }, 350);
+        }
+
+        const view = { tab: "collection", filter: "all", q: "", sort: "num" };
+
+        /* ---------- Utilità ---------- */
+        const $ = (s, r = document) => r.querySelector(s);
+        const esc = (s) =>
+          String(s ?? "").replace(
+            /[&<>"']/g,
+            (c) =>
+              ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;",
+              })[c],
+          );
+        const pad = (n) => String(n).padStart(3, "0");
+        const today = () => {
+          const d = new Date();
+          return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+        };
+        const fmtDate = (s) => {
+          if (!s) return "";
+          const [y, m, d] = s.split("-").map(Number);
+          return new Intl.DateTimeFormat("it-IT", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          }).format(new Date(y, m - 1, d));
+        };
+        const fmtMonth = (s) => {
+          const [y, m] = s.split("-").map(Number);
+          return new Intl.DateTimeFormat("it-IT", {
+            month: "long",
+            year: "numeric",
+          }).format(new Date(y, m - 1, 1));
+        };
+        function tint(hex, amt = 0.78) {
+          const h = hex.replace("#", "");
+          const n = parseInt(
+            h.length === 3
+              ? h
+                  .split("")
+                  .map((c) => c + c)
+                  .join("")
+              : h,
+            16,
+          );
+          const ch = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((v) =>
+            Math.round(v + (255 - v) * amt),
+          );
+          return "#" + ch.map((v) => v.toString(16).padStart(2, "0")).join("");
+        }
+        function pens() {
+          return CATALOG.concat(state.custom).map((p, i) => ({
+            ...p,
+            n: i + 1,
+            e: state.entries[p.id] || {},
+          }));
+        }
+        function findPen(id) {
+          return pens().find((p) => p.id === id);
+        }
+        function entry(id) {
+          return state.entries[id] || (state.entries[id] = {});
+        }
+
+        const ICON = {
+          check:
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>',
+          pin: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>',
+          close:
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+        };
+
+        /* Illustrazione: penna inclinata con il “friend” come cappuccio */
+        function art(p, cls = "") {
+          const d = p.deep || "#777";
+          const img =
+            p.e && p.e.img
+              ? `<img src="${esc(p.e.img)}" alt="" loading="lazy" data-photo>`
+              : "";
+          return `<div class="art ${cls}" style="--bg:${esc(p.bg || "#eee")}">
+  <svg viewBox="0 0 200 200" aria-hidden="true"><g transform="rotate(-26 100 110)">
+    <rect x="87" y="66" width="26" height="104" rx="11" fill="${esc(d)}"/>
+    <rect x="87" y="128" width="26" height="30" fill="#fff" opacity=".28"/>
+    <rect x="109" y="74" width="7" height="46" rx="3.5" fill="#fff" opacity=".55"/>
+    <path d="M91 168h18l-9 22z" fill="${esc(d)}"/><path d="M98 184h4l-2 6z" fill="#1d1d1b"/>
+    <text x="100" y="70" font-size="62" text-anchor="middle">${esc(p.emoji || "🖊️")}</text>
+  </g></svg>${img}</div>`;
+        }
+
+        /* ---------- Render della collezione ---------- */
+        function renderProgress(all) {
+          const owned = all.filter((p) => p.e.owned).length,
+            total = all.length;
+          const pct = total ? Math.round((owned / total) * 100) : 0;
+          $("#ownedN").textContent = owned;
+          $("#totalN").textContent = total;
+          $("#pct").textContent = pct + "%";
+          const fill = $("#fill");
+          fill.style.width = pct + "%";
+          fill.toggleAttribute("data-empty", pct === 0);
+          const bar = $("#bar");
+          bar.setAttribute("aria-valuemax", total);
+          bar.setAttribute("aria-valuenow", owned);
+          const left = total - owned;
+          $("#strip").textContent =
+            left === 0 && total
+              ? "Collezione completa! Ce le hai tutte."
+              : left === 1
+                ? "Ti manca una sola penna: ci sei quasi!"
+                : `Ti mancano ancora ${left} penne. Buona caccia!`;
+          $("#cAll").textContent = total;
+          $("#cOwned").textContent = owned;
+          $("#cMissing").textContent = left;
+        }
+
+        function cardHTML(p) {
+          const o = !!p.e.owned;
+          return `<li class="card ${o ? "is-owned" : "is-missing"}">
+    <button class="card-open" data-open="${esc(p.id)}" aria-label="${esc(p.name)}, ${o ? "ce l’ho" : "mi manca"}. Apri la scheda">
+      ${art(p)}
+      <div class="card-body">
+        <span class="num">N. ${pad(p.n)}</span>
+        <h3>${esc(p.name)}</h3>
+        <p class="animal">${esc(p.animal)}</p>
+        ${o && p.e.place ? `<p class="where">${ICON.pin}<span>${esc(p.e.place)}</span></p>` : `<p class="motto">“${esc(p.motto)}”</p>`}
+      </div>
+    </button>
+    <button class="tick" data-toggle="${esc(p.id)}" aria-pressed="${o}" aria-label="${o ? "Togli dalla collezione" : "Segna come trovata"}: ${esc(p.name)}">${ICON.check}</button>
+  </li>`;
+        }
+
+        function renderGrid() {
+          const all = pens();
+          renderProgress(all);
+          const q = view.q.trim().toLowerCase();
+          let list = all.filter((p) => {
+            if (view.filter === "owned" && !p.e.owned) return false;
+            if (view.filter === "missing" && p.e.owned) return false;
+            if (!q) return true;
+            return [
+              p.name,
+              p.animal,
+              p.motto,
+              p.type,
+              p.e.desc ?? p.desc,
+              p.e.place,
+              p.e.note,
+              p.e.ink,
+            ].some((v) => v && String(v).toLowerCase().includes(q));
+          });
+          if (view.sort === "name")
+            list.sort((a, b) => a.name.localeCompare(b.name, "it"));
+          if (view.sort === "date")
+            list.sort(
+              (a, b) =>
+                (b.e.owned ? 1 : 0) - (a.e.owned ? 1 : 0) ||
+                String(b.e.date || "").localeCompare(String(a.e.date || "")) ||
+                a.n - b.n,
+            );
+          const grid = $("#grid");
+          if (!list.length) {
+            const msg = q
+              ? `Nessuna penna corrisponde a “${esc(view.q)}”.`
+              : view.filter === "owned"
+                ? "Non hai ancora segnato nessuna penna."
+                : "Le hai trovate tutte!";
+            grid.innerHTML = `<li class="empty"><b>${msg}</b>${q || view.filter !== "all" ? '<button class="link-btn" data-action="clear">Mostra tutte le penne</button>' : ""}</li>`;
+            return;
+          }
+          grid.innerHTML = list.map(cardHTML).join("");
+        }
+
+        /* ---------- Render dei ricordi ---------- */
+        function renderMemories() {
+          const all = pens();
+          renderProgress(all);
+          const owned = all.filter((p) => p.e.owned);
+          const box = $("#memories");
+          if (!owned.length) {
+            box.innerHTML = `<div class="empty"><b>Il diario è ancora vuoto</b>Segna la prima penna che hai e annota dove l’hai presa: comparirà qui.<br><button class="link-btn" data-tab="collection">Vai alla collezione</button></div>`;
+            return;
+          }
+          const places = {};
+          owned.forEach((p) => {
+            const k = (p.e.place || "").trim();
+            if (k) places[k] = (places[k] || 0) + 1;
+          });
+          const placeChips = Object.entries(places)
+            .sort((a, b) => b[1] - a[1])
+            .map(
+              ([k, v]) =>
+                `<button class="chip" data-place="${esc(k)}">${esc(k)}<span>${v}</span></button>`,
+            )
+            .join("");
+          const groups = {};
+          owned.forEach((p) => {
+            const k = p.e.date ? p.e.date.slice(0, 7) : "nodate";
+            (groups[k] ||= []).push(p);
+          });
+          const keys = Object.keys(groups).sort((a, b) =>
+            a === "nodate" ? 1 : b === "nodate" ? -1 : b.localeCompare(a),
+          );
+          box.innerHTML =
+            (placeChips
+              ? `<div class="places"><h2>Dove le ho trovate</h2>${placeChips}</div>`
+              : "") +
+            keys
+              .map((k) => {
+                const items = groups[k].sort((a, b) =>
+                  String(b.e.date || "").localeCompare(String(a.e.date || "")),
+                );
+                return `<section class="month"><h2>${k === "nodate" ? "Senza data" : esc(fmtMonth(k))}</h2><ol class="moments">${items
+                  .map(
+                    (
+                      p,
+                    ) => `<li><button class="moment" data-open="${esc(p.id)}">${art(p)}<div>
+          <span class="num">N. ${pad(p.n)}</span><h3>${esc(p.name)}</h3>
+          <p>${[p.e.place, p.e.date ? fmtDate(p.e.date) : ""].filter(Boolean).map(esc).join(", ") || "Luogo non annotato"}</p>
+          ${p.e.note ? `<p class="note">${esc(p.e.note)}</p>` : ""}
+        </div></button></li>`,
+                  )
+                  .join("")}</ol></section>`;
+              })
+              .join("");
+        }
+
+        function render() {
+          view.tab === "collection" ? renderGrid() : renderMemories();
+        }
+
+        /* ---------- Scheda di dettaglio ---------- */
+        const sheet = $("#sheet"),
+          sheetIn = $("#sheetIn");
+        let current = null;
+
+        function knownPlaces() {
+          return [
+            ...new Set(
+              Object.values(state.entries)
+                .map((e) => (e.place || "").trim())
+                .filter(Boolean),
+            ),
+          ].sort((a, b) => a.localeCompare(b, "it"));
+        }
+        function setSaved(t) {
+          const el = $("#saved", sheetIn);
+          if (el) {
+            el.textContent = t;
+          }
+        }
+
+        function drawSheet() {
+          const p = findPen(current);
+          if (!p) return sheet.close();
+          const o = !!p.e.owned,
+            custom = state.custom.some((c) => c.id === p.id);
+          sheetIn.innerHTML = `
+    <div class="sheet-head"><span class="grab"></span><button class="icon-btn" data-close aria-label="Chiudi">${ICON.close}</button></div>
+    ${art(p, o ? "" : "is-missing-art")}
+    <div class="meta"><span class="num">N. ${pad(p.n)}</span><span class="pill">${esc(p.type)}</span></div>
+    <h2 id="sheetTitle">${esc(p.name)}</h2>
+    <p class="sub">${esc(p.animal)}${p.motto ? `, “${esc(p.motto)}”` : ""}</p>
+    ${(p.e.desc ?? p.desc) ? `<p class="desc" id="descText">${esc(p.e.desc ?? p.desc)}</p>` : `<p class="desc" id="descText" hidden></p>`}
+    <button class="own-btn" data-sheet-toggle aria-pressed="${o}">${o ? ICON.check + " Ce l’ho!" : "Segna: ce l’ho"}</button>
+    <p class="own-hint">${o ? "Tocca di nuovo per toglierla dalla collezione." : "Quando la trovi, potrai annotare dove e quando."}</p>
+
+    ${
+      o
+        ? `<div class="section">
+      <h3>Il ricordo</h3><p>Dove l’hai presa e cosa vuoi ricordare di quel momento.</p>
+      <label class="field"><span>Dove l’ho presa</span><input name="m_place" list="placeList" value="${esc(p.e.place)}" placeholder="Es. Legami Milano, Duomo" autocomplete="off"></label>
+      <datalist id="placeList">${knownPlaces()
+        .map((x) => `<option value="${esc(x)}">`)
+        .join("")}</datalist>
+      <div class="row">
+        <label class="field"><span>Quando</span><input type="date" name="m_date" value="${esc(p.e.date)}"></label>
+        <label class="field"><span>Colore inchiostro</span><input name="m_ink" value="${esc(p.e.ink)}" placeholder="Es. blu"></label>
+      </div>
+      <label class="field"><span>Note</span><textarea name="m_note" placeholder="Es. presa in gita con Giulia, era l’ultima rimasta">${esc(p.e.note)}</textarea></label>
+    </div>`
+        : ""
+    }
+
+    <div class="section">
+      <h3>Immagine e descrizione</h3><p>Carica la foto della tua penna o incolla l’indirizzo dell’immagine dal sito (tasto destro sulla foto, “Copia indirizzo immagine”). Puoi anche sostituire la descrizione con quella della pagina del prodotto.</p>
+      <label class="field"><span>Descrizione</span><textarea name="m_desc" placeholder="Incolla qui la descrizione dal sito Legami">${esc(p.e.desc ?? p.desc ?? "")}</textarea></label>
+      <label class="field"><span>Indirizzo dell’immagine</span><input name="imgurl" type="url" inputmode="url" value="${p.e.img && !p.e.img.startsWith("data:") ? esc(p.e.img) : ""}" placeholder="https://…"></label>
+      <div class="btns">
+        <label class="btn" style="position:relative">Carica una foto<input type="file" name="photo" accept="image/*"></label>
+        ${p.e.img ? `<button class="btn" data-action="clearimg">Usa l’illustrazione</button>` : ""}
+      </div>
+    </div>
+
+    ${
+      custom
+        ? `<div class="section">
+      <h3>Dati della penna</h3><p>Questa penna l’hai aggiunta tu, quindi puoi modificarla.</p>
+      <div class="row">
+        <label class="field"><span>Nome</span><input name="c_name" value="${esc(p.name)}"></label>
+        <label class="field"><span>Emoji</span><input name="c_emoji" value="${esc(p.emoji)}" maxlength="8"></label>
+      </div>
+      <label class="field"><span>Animale</span><input name="c_animal" value="${esc(p.animal)}"></label>
+      <label class="field"><span>Frase</span><input name="c_motto" value="${esc(p.motto)}"></label>
+      <div class="row">
+        <label class="field"><span>Tipo</span><input name="c_type" value="${esc(p.type)}"></label>
+        <label class="field"><span>Colore</span><input type="color" name="c_deep" value="${esc(p.deep)}"></label>
+      </div>
+      <button class="btn danger" data-action="delete">Elimina questa penna</button>
+    </div>`
+        : ""
+    }
+    <p class="saved" id="saved" aria-live="polite"></p>`;
+          const a = $(".art", sheetIn);
+          if (!o)
+            a.style.cssText += ";filter:grayscale(1) contrast(.92);opacity:.5";
+        }
+
+        function openSheet(id) {
+          current = id;
+          drawSheet();
+          if (!sheet.open) sheet.showModal();
+          sheetIn.parentElement.scrollTop = 0;
+        }
+
+        function drawNew() {
+          current = null;
+          sheetIn.innerHTML = `
+    <div class="sheet-head"><span class="grab"></span><button class="icon-btn" data-close aria-label="Chiudi">${ICON.close}</button></div>
+    <h2 id="sheetTitle" style="margin-top:4px">Nuova penna</h2>
+    <p class="sub">Per le uscite nuove o le edizioni limitate che non sono in elenco.</p>
+    <div class="section" style="border:0;padding-top:0">
+      <div class="row">
+        <label class="field"><span>Nome</span><input id="nName" placeholder="Es. Fox" required></label>
+        <label class="field"><span>Emoji</span><input id="nEmoji" value="🦊" maxlength="8"></label>
+      </div>
+      <label class="field"><span>Animale</span><input id="nAnimal" placeholder="Es. Volpe"></label>
+      <label class="field"><span>Frase</span><input id="nMotto" placeholder="Es. Stay Wild"></label>
+      <label class="field"><span>Descrizione</span><textarea id="nDesc" placeholder="Incolla qui la descrizione dal sito Legami"></textarea></label>
+      <div class="row">
+        <label class="field"><span>Tipo</span><select id="nType"><option>Gel</option><option>Penna</option><option>3 colori</option><option>Set</option><option>Blind box</option><option>Edizione limitata</option></select></label>
+        <label class="field"><span>Colore</span><input type="color" id="nColor" value="#e2843a"></label>
+      </div>
+      <label class="field" style="display:flex;gap:10px;align-items:center"><input type="checkbox" id="nOwned" checked style="width:22px;min-height:22px;height:22px"><span style="margin:0">Ce l’ho già</span></label>
+      <button class="btn primary" data-action="create" style="width:100%;justify-content:center;min-height:52px">Aggiungi alla collezione</button>
+    </div>`;
+          if (!sheet.open) sheet.showModal();
+          setTimeout(() => $("#nName", sheetIn)?.focus(), 50);
+        }
+
+        function toggle(id) {
+          const p = findPen(id);
+          if (!p) return;
+          const e = entry(id);
+          e.owned = !e.owned;
+          if (e.owned && !e.date) e.date = today();
+          save();
+          toast(
+            e.owned
+              ? `${p.name} è nella tua collezione`
+              : `${p.name} tolta dalla collezione`,
+          );
+          return e.owned;
+        }
+
+        async function fileToDataURL(file) {
+          const url = URL.createObjectURL(file);
+          try {
+            const img = new Image();
+            await new Promise((res, rej) => {
+              img.onload = res;
+              img.onerror = rej;
+              img.src = url;
+            });
+            const max = 640,
+              s = Math.min(
+                1,
+                max / Math.max(img.naturalWidth, img.naturalHeight),
+              );
+            const c = document.createElement("canvas");
+            c.width = Math.round(img.naturalWidth * s);
+            c.height = Math.round(img.naturalHeight * s);
+            c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+            return c.toDataURL("image/jpeg", 0.82);
+          } finally {
+            URL.revokeObjectURL(url);
+          }
+        }
+
+        /* ---------- Eventi ---------- */
+        document.addEventListener("click", async (ev) => {
+          const t = ev.target.closest(
+            "[data-toggle],[data-open],[data-filter],[data-tab],[data-place],[data-close],[data-action],[data-sheet-toggle]",
+          );
+          if (!t) return;
+          if (t.dataset.toggle) {
+            toggle(t.dataset.toggle);
+            render();
+            return;
+          }
+          if (t.dataset.open) {
+            openSheet(t.dataset.open);
+            return;
+          }
+          if (t.hasAttribute("data-sheet-toggle")) {
+            toggle(current);
+            drawSheet();
+            return;
+          }
+          if (t.dataset.filter) {
+            view.filter = t.dataset.filter;
+            document
+              .querySelectorAll("[data-filter]")
+              .forEach((b) => b.setAttribute("aria-pressed", b === t));
+            renderGrid();
+            return;
+          }
+          if (t.dataset.tab) {
+            setTab(t.dataset.tab);
+            return;
+          }
+          if (t.dataset.place !== undefined) {
+            view.q = t.dataset.place;
+            $("#q").value = view.q;
+            setTab("collection");
+            return;
+          }
+          if (t.hasAttribute("data-close")) {
+            t.closest("dialog").close();
+            return;
+          }
+          const a = t.dataset.action;
+          if (a === "menu") $("#menu").showModal();
+          if (a === "theme") {
+            const dark =
+              document.documentElement.getAttribute("data-theme") !== "dark";
+            applyTheme(dark);
+            toast(dark ? "Tema scuro attivato" : "Tema chiaro attivato");
+          }
+          if (a === "new") drawNew();
+          if (a === "clear") {
+            view.q = "";
+            $("#q").value = "";
+            view.filter = "all";
+            document
+              .querySelectorAll("[data-filter]")
+              .forEach((b) =>
+                b.setAttribute("aria-pressed", b.dataset.filter === "all"),
+              );
+            renderGrid();
+          }
+          if (a === "clearimg") {
+            delete entry(current).img;
+            save();
+            drawSheet();
+          }
+          if (a === "delete") {
+            const p = findPen(current);
+            if (p && confirm(`Eliminare “${p.name}” e i suoi ricordi?`)) {
+              state.custom = state.custom.filter((c) => c.id !== current);
+              delete state.entries[current];
+              save();
+              sheet.close();
+              toast("Penna eliminata");
+            }
+          }
+          if (a === "create") {
+            const name = $("#nName", sheetIn).value.trim();
+            if (!name) {
+              $("#nName", sheetIn).focus();
+              toast("Dai un nome alla penna");
+              return;
+            }
+            const deep = $("#nColor", sheetIn).value;
+            const p = {
+              id: "c" + Date.now().toString(36),
+              name,
+              emoji: $("#nEmoji", sheetIn).value.trim() || "🖊️",
+              animal: $("#nAnimal", sheetIn).value.trim() || "Altro",
+              motto: $("#nMotto", sheetIn).value.trim(),
+              type: $("#nType", sheetIn).value,
+              desc: $("#nDesc", sheetIn).value.trim(),
+              deep,
+              bg: tint(deep),
+            };
+            state.custom.push(p);
+            if ($("#nOwned", sheetIn).checked)
+              state.entries[p.id] = { owned: true, date: today() };
+            save();
+            render();
+            toast(`${name} aggiunta`);
+            openSheet(p.id);
+          }
+          if (a === "export") {
+            const blob = new Blob(
+              [
+                JSON.stringify(
+                  {
+                    app: "penndex",
+                    version: 1,
+                    exported: new Date().toISOString(),
+                    ...state,
+                  },
+                  null,
+                  2,
+                ),
+              ],
+              { type: "application/json" },
+            );
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = `penndex-backup-${today()}.json`;
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+            toast("Backup scaricato");
+          }
+          if (a === "reset") {
+            if (
+              confirm(
+                "Svuotare la collezione? Ricordi, foto e penne aggiunte verranno cancellati da questo browser.",
+              )
+            ) {
+              state = { entries: {}, custom: [] };
+              save();
+              render();
+              $("#menu").close();
+              toast("Collezione svuotata");
+            }
+          }
+        });
+
+        sheet.addEventListener("input", (ev) => {
+          const el = ev.target;
+          if (!current || !el.name) return;
+          if (el.name.startsWith("m_")) {
+            entry(current)[el.name.slice(2)] = el.value;
+            queueSave();
+            if (el.name === "m_desc") {
+              const d = $("#descText", sheetIn);
+              d.textContent = el.value;
+              d.hidden = !el.value.trim();
+            }
+          } else if (el.name.startsWith("c_")) {
+            const c = state.custom.find((x) => x.id === current);
+            if (!c) return;
+            const k = el.name.slice(2);
+            c[k] = el.value;
+            if (k === "deep") c.bg = tint(el.value);
+            queueSave();
+          }
+        });
+        sheet.addEventListener("change", async (ev) => {
+          const el = ev.target;
+          if (!current) return;
+          if (el.name === "photo" && el.files && el.files[0]) {
+            try {
+              entry(current).img = await fileToDataURL(el.files[0]);
+              if (save()) toast("Foto salvata");
+              drawSheet();
+            } catch (e) {
+              toast(
+                "Non riesco a leggere questa immagine. Prova con un JPG o un PNG.",
+              );
+            }
+          }
+          if (el.name === "imgurl") {
+            const v = el.value.trim();
+            if (v && !/^https?:\/\//i.test(v)) {
+              toast("L’indirizzo deve iniziare con https://");
+              return;
+            }
+            if (v) entry(current).img = v;
+            else delete entry(current).img;
+            save();
+            drawSheet();
+          }
+          if (el.name && el.name.startsWith("c_")) drawSheet();
+        });
+        sheet.addEventListener("click", (ev) => {
+          if (ev.target === sheet) sheet.close();
+        });
+        $("#menu").addEventListener("click", (ev) => {
+          if (ev.target.id === "menu") ev.target.close();
+        });
+        sheet.addEventListener("close", () => {
+          clearTimeout(saveTimer);
+          save();
+          current = null;
+          render();
+        });
+
+        /* Foto che non si caricano: torna all’illustrazione */
+        document.addEventListener(
+          "error",
+          (ev) => {
+            if (ev.target.matches && ev.target.matches("img[data-photo]"))
+              ev.target.remove();
+          },
+          true,
+        );
+
+        $("#q").addEventListener("input", (e) => {
+          view.q = e.target.value;
+          renderGrid();
+        });
+        $("#sort").addEventListener("change", (e) => {
+          view.sort = e.target.value;
+          renderGrid();
+        });
+
+        $("#importFile").addEventListener("change", async (e) => {
+          const f = e.target.files && e.target.files[0];
+          if (!f) return;
+          try {
+            const d = JSON.parse(await f.text());
+            if (!d || typeof d.entries !== "object") throw new Error();
+            if (
+              !confirm(
+                "Sostituire la collezione attuale con quella del backup?",
+              )
+            )
+              return;
+            state = {
+              entries: d.entries || {},
+              custom: Array.isArray(d.custom) ? d.custom : [],
+            };
+            save();
+            render();
+            $("#menu").close();
+            toast("Collezione ripristinata");
+          } catch (err) {
+            toast("Questo file non è un backup di Penndex.");
+          } finally {
+            e.target.value = "";
+          }
+        });
+
+        function setTab(tab) {
+          view.tab = tab;
+          document
+            .querySelectorAll("[data-tab].tab")
+            .forEach((b) =>
+              b.setAttribute("aria-selected", b.dataset.tab === tab),
+            );
+          $("#viewCollection").hidden = tab !== "collection";
+          $("#viewMemories").hidden = tab !== "memories";
+          render();
+        }
+
+        function applyTheme(dark) {
+          document.documentElement.toggleAttribute("data-theme", false);
+          if (dark) document.documentElement.setAttribute("data-theme", "dark");
+          $("#themeSwitch").setAttribute("aria-checked", dark);
+          document
+            .querySelector('meta[name="theme-color"]')
+            .setAttribute("content", dark ? "#161616" : "#e2231a");
+          try {
+            localStorage.setItem("penndex:theme", dark ? "dark" : "light");
+          } catch (e) {}
+        }
+        applyTheme(
+          document.documentElement.getAttribute("data-theme") === "dark",
+        );
+
+        let toastTimer;
+        function toast(msg) {
+          const t = $("#toast");
+          t.textContent = msg;
+          t.classList.add("show");
+          clearTimeout(toastTimer);
+          toastTimer = setTimeout(() => t.classList.remove("show"), 2200);
+        }
+
+        render();
+      })();
+    </script>
+  </body>
+</html>
