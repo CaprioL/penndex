@@ -26,7 +26,7 @@
         } catch (e) {}
         function state(a, m) {
           return {
-            analytics_storage: "granted",
+            analytics_storage: a ? "granted" : "granted",
             ad_storage: m ? "granted" : "denied",
             ad_user_data: m ? "granted" : "denied",
             ad_personalization: m ? "granted" : "denied",
