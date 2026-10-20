@@ -52,13 +52,16 @@ Conseguenze da sapere:
 - cancellare i dati di navigazione cancella anche la collezione;
 - per spostarla o metterla al sicuro usa **Impostazioni → Scarica il backup**.
 
+Il sito usa cookie di statistica (Google Analytics, tramite Google Tag Manager) solo se li accetti, e nessun cookie di marketing. Puoi cambiare scelta in qualsiasi momento da **Preferenze cookie**, nel footer o nelle Impostazioni. Tutti i dettagli sono nell’[informativa privacy e cookie](https://capriol.github.io/penndex/privacy.html).
+
 ## Com’è fatto
 
-Niente framework, niente librerie, niente build: HTML, CSS e JavaScript in un unico file, pubblicato con GitHub Pages.
+Niente framework, niente librerie, niente build: HTML, CSS e JavaScript in un file principale, pubblicato con GitHub Pages.
 
 | File | A cosa serve |
 |---|---|
 | `index.html` | Tutto il sito: struttura, stili, logica e catalogo delle penne. |
+| `privacy.html` | Informativa privacy e cookie. |
 | `manifest.webmanifest` | Nome, icone e modalità dell’app installata. |
 | `sw.js` | Service worker: rende il sito installabile e disponibile offline. |
 | `favicon.svg`, `favicon.ico`, `apple-touch-icon.png` | Icone del sito nel browser e nella schermata Home. |

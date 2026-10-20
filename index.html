@@ -24,12 +24,14 @@
           )
             stored = c;
         } catch (e) {}
-        function state(a, m) {
+        /* Solo statistiche: i segnali pubblicitari restano sempre "denied"
+           perché Penndex non usa cookie di marketing. */
+        function state(a) {
           return {
             analytics_storage: a ? "granted" : "granted",
-            ad_storage: m ? "granted" : "denied",
-            ad_user_data: m ? "granted" : "denied",
-            ad_personalization: m ? "granted" : "denied",
+            ad_storage: "denied",
+            ad_user_data: "denied",
+            ad_personalization: "denied",
           };
         }
         window.penndexConsent = {
@@ -38,23 +40,17 @@
           state: state,
         };
         if (native) {
-          var d = state(false, false);
+          var d = state(false);
           d.functionality_storage = "granted";
           d.security_storage = "granted";
           d.wait_for_update = 500;
           gtag("consent", "default", d);
-          if (stored)
-            gtag(
-              "consent",
-              "update",
-              state(stored.analytics, stored.marketing),
-            );
+          if (stored) gtag("consent", "update", state(stored.analytics));
         }
         dataLayer.push({
           event: "consent_default",
           consent_status: stored ? "stored" : "unset",
           consent_analytics: stored && stored.analytics ? "granted" : "denied",
-          consent_marketing: stored && stored.marketing ? "granted" : "denied",
         });
       })();
     </script>
@@ -1171,6 +1167,10 @@
         line-height: 1.5;
         color: var(--muted);
       }
+      .cookie p a {
+        color: var(--ink);
+        font-weight: 500;
+      }
       .cookie .icon-btn {
         position: absolute;
         top: 12px;
@@ -1230,6 +1230,13 @@
       }
       .cookie-open .fab {
         display: none;
+      }
+      a.footer-link {
+        display: inline-block;
+      }
+      .menu-list a.btn {
+        color: var(--ink);
+        text-decoration: none;
       }
       .footer-link {
         border: 0;
@@ -1481,6 +1488,8 @@
           Nomi e marchi citati appartengono ai rispettivi proprietari.
         </p>
         <p class="disclaimer">
+          <a class="footer-link" href="privacy.html">Privacy e cookie</a>
+          ·
           <button class="footer-link" data-action="consent-open">
             Preferenze cookie
           </button>
@@ -1557,6 +1566,7 @@
           <button class="btn" data-action="consent-open">
             Preferenze cookie
           </button>
+          <a class="btn" href="privacy.html">Informativa privacy e cookie</a>
         </div>
         <small
           >I dati restano solo in questo browser. Scarica un backup ogni tanto e
@@ -1590,9 +1600,11 @@
           </svg>
         </button>
         <p>
-          Penndex usa cookie tecnici necessari al funzionamento del sito. <br />
+          Penndex usa cookie tecnici necessari al funzionamento del sito e, solo
+          con il tuo consenso, cookie di statistica (Google Analytics). <br />
           La tua collezione resta nel browser e non viene mai inviata. <br />
           Puoi cambiare idea quando vuoi da “Preferenze cookie”.
+          <a href="privacy.html">Leggi l’informativa</a>.
         </p>
         <div class="cookie-opts" id="cookieOpts" hidden>
           <div
@@ -1617,20 +1629,8 @@
           >
             <span
               >Statistiche<small
-                >Visite e interazioni in forma aggregata.</small
-              ></span
-            ><span class="switch" aria-hidden="true"></span>
-          </button>
-          <button
-            class="switch-row"
-            role="switch"
-            aria-checked="false"
-            data-action="consent-toggle"
-            data-key="marketing"
-          >
-            <span
-              >Marketing<small
-                >Misurazione e personalizzazione della pubblicità.</small
+                >Google Analytics: visite e interazioni in forma
+                aggregata.</small
               ></span
             ><span class="switch" aria-hidden="true"></span>
           </button>
@@ -1645,7 +1645,7 @@
             Personalizza
           </button>
           <button class="btn primary" data-action="consent-accept">
-            Accetta tutti
+            Accetta
           </button>
         </div>
       </div>
@@ -2462,7 +2462,7 @@
 
         /* ---------- Consenso cookie ----------
            Ogni interazione fa un dataLayer.push con un evento dedicato
-           (vedi handover, sezione 7.5 bis) e poi un evento generico
+           (vedi handover, sezione 7.6) e poi un evento generico
            "consent_update" con lo stato finale. */
         const CKEY = "penndex:consent",
           CVER = 1;
@@ -2472,7 +2472,7 @@
           state: () => ({}),
         };
         let consent = PC.stored;
-        const draft = { analytics: false, marketing: false };
+        const draft = { analytics: false };
         const gs = (b) => (b ? "granted" : "denied");
         function dl(o) {
           (window.dataLayer = window.dataLayer || []).push(o);
@@ -2480,7 +2480,6 @@
         function consentVars(c) {
           return {
             consent_analytics: gs(c && c.analytics),
-            consent_marketing: gs(c && c.marketing),
           };
         }
         function drawDraft() {
@@ -2492,7 +2491,6 @@
         }
         function showCookie(custom, source) {
           draft.analytics = !!(consent && consent.analytics);
-          draft.marketing = !!(consent && consent.marketing);
           drawDraft();
           $("#cookieOpts").hidden = !custom;
           $("#cookieCustom").textContent = custom
@@ -2513,18 +2511,17 @@
           $("#cookie").hidden = true;
           document.documentElement.classList.remove("cookie-open");
         }
-        function setConsent(analytics, marketing, action) {
+        function setConsent(analytics, action) {
           consent = {
             version: CVER,
             analytics: !!analytics,
-            marketing: !!marketing,
             date: new Date().toISOString(),
           };
           try {
             localStorage.setItem(CKEY, JSON.stringify(consent));
           } catch (e) {}
           if (PC.native && typeof window.gtag === "function")
-            window.gtag("consent", "update", PC.state(analytics, marketing));
+            window.gtag("consent", "update", PC.state(analytics));
           const vars = consentVars(consent);
           dl({ event: "consent_" + action, ...vars });
           dl({ event: "consent_update", consent_action: action, ...vars });
@@ -2580,9 +2577,9 @@
             if ($("#menu").open) $("#menu").close();
             showCookie(true, t.closest("footer") ? "footer" : "settings");
           }
-          if (a === "consent-accept") setConsent(true, true, "accept_all");
-          if (a === "consent-reject") setConsent(false, false, "reject_all");
-          if (a === "consent-close") setConsent(false, false, "close");
+          if (a === "consent-accept") setConsent(true, "accept_all");
+          if (a === "consent-reject") setConsent(false, "reject_all");
+          if (a === "consent-close") setConsent(false, "close");
           if (a === "consent-toggle") {
             draft[t.dataset.key] = !draft[t.dataset.key];
             drawDraft();
@@ -2600,7 +2597,7 @@
                 event: "consent_preferences_open",
                 consent_source: "banner",
               });
-            } else setConsent(draft.analytics, draft.marketing, "custom_save");
+            } else setConsent(draft.analytics, "custom_save");
           }
           if (a === "theme") {
             const dark =
@@ -2890,7 +2887,11 @@
         }
 
         render();
-        if (!consent) showCookie(false, "auto");
+        /* Dalla pagina privacy: privacy.html rimanda a ./#preferenze-cookie */
+        if (location.hash === "#preferenze-cookie") {
+          history.replaceState(null, "", location.pathname + location.search);
+          showCookie(true, "privacy");
+        } else if (!consent) showCookie(false, "auto");
 
         /* App installabile: registra il service worker (solo online, non in locale) */
         if (

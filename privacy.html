@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#e2231a" />
+    <link rel="icon" href="favicon.ico" sizes="48x48" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Privacy e cookie – Penndex</title>
+    <meta
+      name="description"
+      content="Informativa privacy e cookie di Penndex: quali dati restano nel tuo browser, quali servizi esterni usa il sito e come gestire il consenso alle statistiche."
+    />
+    <link
+      rel="canonical"
+      href="https://capriol.github.io/penndex/privacy.html"
+    />
+    <script>
+      try {
+        if (localStorage.getItem("penndex:theme") === "dark")
+          document.documentElement.setAttribute("data-theme", "dark");
+      } catch (e) {}
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Fredoka:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --paper: #ffffff;
+        --ink: #1d1d1b;
+        --muted: #6b6b6b;
+        --line: #e6e6e6;
+        --surface: #f6f6f6;
+        --accent: #e2231a;
+        --on-accent: #ffffff;
+        --display:
+          "Fredoka", "Baloo 2", "Arial Rounded MT Bold", "Trebuchet MS",
+          system-ui, sans-serif;
+        --body:
+          "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica,
+          Arial, sans-serif;
+        color-scheme: light;
+        box-sizing: border-box;
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      :root[data-theme="dark"] {
+        --paper: #161616;
+        --ink: #f2f2f0;
+        --muted: #a3a3a0;
+        --line: #2e2e2e;
+        --surface: #222222;
+        --accent: #ff4136;
+        color-scheme: dark;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        -webkit-text-size-adjust: 100%;
+      }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font: 400 1rem/1.6 var(--body);
+        -webkit-font-smoothing: antialiased;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0 0 auto;
+        height: env(safe-area-inset-top, 0px);
+        z-index: 10;
+        background: var(--paper);
+      }
+      :focus-visible {
+        outline: 2.5px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .strip {
+        height: 6px;
+        background: var(--accent);
+      }
+      .wrap {
+        width: 100%;
+        max-width: 760px;
+        margin-inline: auto;
+        padding-inline: 20px;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding-top: 22px;
+      }
+      .logo {
+        color: var(--accent);
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: 1.75rem;
+        line-height: 1;
+        text-decoration: none;
+      }
+      .back {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        min-height: 44px;
+        padding: 8px 16px;
+        border: 1.5px solid var(--line);
+        border-radius: 999px;
+        color: var(--ink);
+        font-weight: 700;
+        font-size: 0.9375rem;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+      .back svg {
+        width: 18px;
+        height: 18px;
+      }
+      h1 {
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: clamp(2rem, 8vw, 2.75rem);
+        line-height: 1.05;
+        margin: 36px 0 6px;
+      }
+      .updated {
+        color: var(--muted);
+        font-size: 0.875rem;
+        margin: 0 0 24px;
+      }
+      h2 {
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: 1.375rem;
+        line-height: 1.2;
+        margin: 40px 0 10px;
+      }
+      h3 {
+        font-weight: 700;
+        font-size: 1rem;
+        margin: 22px 0 4px;
+      }
+      p,
+      ul {
+        margin: 0 0 12px;
+      }
+      ul {
+        padding-left: 1.2em;
+      }
+      li {
+        margin-bottom: 6px;
+      }
+      a {
+        color: var(--ink);
+        text-decoration-color: var(--accent);
+        text-underline-offset: 2px;
+      }
+      .summary {
+        background: var(--surface);
+        border: 1.5px solid var(--line);
+        border-radius: 20px;
+        padding: 18px 20px 8px;
+        margin: 8px 0 0;
+      }
+      .summary ul {
+        padding-left: 1.1em;
+      }
+      .table-wrap {
+        overflow-x: auto;
+        margin: 8px 0 14px;
+        border: 1.5px solid var(--line);
+        border-radius: 16px;
+      }
+      table {
+        width: 100%;
+        min-width: 520px;
+        border-collapse: collapse;
+        font-size: 0.875rem;
+      }
+      th,
+      td {
+        text-align: left;
+        vertical-align: top;
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--line);
+      }
+      tr:last-child td {
+        border-bottom: 0;
+      }
+      th {
+        font-weight: 700;
+        background: var(--surface);
+      }
+      code {
+        font-size: 0.85em;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: 1px 5px;
+        white-space: nowrap;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        padding: 10px 22px;
+        border-radius: 999px;
+        background: var(--accent);
+        color: var(--on-accent);
+        font-weight: 700;
+        text-decoration: none;
+        margin: 6px 0 12px;
+      }
+      footer {
+        color: var(--muted);
+        font-size: 0.8125rem;
+        text-align: center;
+        margin-top: 48px;
+        padding: 14px 0 40px;
+        border-top: 1px solid var(--line);
+      }
+      footer a {
+        color: inherit;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="strip" aria-hidden="true"></div>
+    <div class="wrap">
+      <header>
+        <a class="logo" href="./" aria-label="Penndex, torna alla collezione"
+          >Penndex</a
+        >
+        <a class="back" href="./"
+          ><svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M15 18l-6-6 6-6" /></svg
+          >Collezione</a
+        >
+      </header>
+
+      <main>
+        <h1>Privacy e cookie</h1>
+        <p class="updated">Ultimo aggiornamento: 20 ottobre 2026</p>
+
+        <div class="summary">
+          <p><strong>In breve</strong></p>
+          <ul>
+            <li>
+              La tua collezione (penne, ricordi, foto, note) resta solo nel tuo
+              browser. Non viene mai inviata a nessuno, nemmeno a me.
+            </li>
+            <li>
+              Non uso cookie di marketing o di profilazione pubblicitaria e non
+              vendo dati.
+            </li>
+          </ul>
+        </div>
+
+        <h2>Chi sono</h2>
+        <p>
+          Penndex è un progetto personale e senza scopo di lucro di Giacomo
+          Caprioli, che è anche il titolare del trattamento dei dati descritti
+          in questa pagina.
+        </p>
+        <p>
+          Per qualsiasi domanda sulla privacy o per esercitare i tuoi diritti
+          puoi scrivermi a
+          <a href="mailto:giacomo.caprioli@gmail.com"
+            >giacomo.caprioli@gmail.com</a
+          >.
+        </p>
+        <p>
+          Penndex non è affiliato, collegato o approvato da Legami Milano
+          (LEGAMI S.p.A.).
+        </p>
+
+        <h2>Cosa resta nel tuo browser</h2>
+        <p>
+          Per funzionare Penndex salva alcune informazioni nella memoria del tuo
+          browser (<code>localStorage</code> e cache dell’app). Restano sul tuo
+          dispositivo, non vengono trasmesse e non le vedo. Sono strumenti
+          tecnici necessari, quindi non richiedono il consenso.
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Cosa contiene</th>
+                <th>Durata</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>penndex:v1</code></td>
+                <td>
+                  La tua collezione: penne segnate, ricordi, luoghi, date, note,
+                  foto e penne aggiunte da te.
+                </td>
+                <td>Finché non la cancelli</td>
+              </tr>
+              <tr>
+                <td><code>penndex:theme</code></td>
+                <td>La scelta tra tema chiaro e scuro.</td>
+                <td>Finché non la cancelli</td>
+              </tr>
+              <tr>
+                <td><code>penndex:consent</code></td>
+                <td>
+                  La tua scelta sui cookie di statistica e la data in cui l’hai
+                  fatta.
+                </td>
+                <td>12 mesi, poi te la chiedo di nuovo</td>
+              </tr>
+              <tr>
+                <td>Cache dell’app</td>
+                <td>
+                  Una copia delle pagine e delle icone, per aprire Penndex anche
+                  senza connessione.
+                </td>
+                <td>Fino al prossimo aggiornamento del sito</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          Puoi cancellare tutto dalle impostazioni del browser (dati dei siti).
+          La sola collezione puoi cancellarla anche da Penndex, in Impostazioni
+          → “Svuota la collezione”. In entrambi i casi, prima scarica un backup
+          se vuoi conservarla.
+        </p>
+
+        <h2>Cookie di statistica</h2>
+        <p>
+          Penndex attiva Google Analytics 4 tramite Google Tag Manager, per
+          capire in forma aggregata e anonima quante persone usano il sito, da
+          quali pagine arrivano e quali funzioni usano. Non uso questi dati per
+          pubblicità, non li incrocio con altre informazioni e non cerco di
+          identificarti.
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Cookie</th>
+                <th>Fornitore</th>
+                <th>Finalità</th>
+                <th>Durata</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>_ga</code></td>
+                <td>Google</td>
+                <td>
+                  Distingue i visitatori con un identificativo casuale, per
+                  contarli nelle statistiche.
+                </td>
+                <td>2 anni</td>
+              </tr>
+              <tr>
+                <td><code>_ga_&lt;ID&gt;</code></td>
+                <td>Google</td>
+                <td>Mantiene lo stato della sessione per le statistiche.</td>
+                <td>2 anni</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          Se rifiuti o chiudi il banner, questi cookie non vengono impostati. I
+          dati raccolti in Google Analytics sono conservati per 14 mesi e poi
+          cancellati automaticamente.
+        </p>
+        <a class="btn" href="./#preferenze-cookie"
+          >Modifica le preferenze cookie</a
+        >
+        <p>
+          Trovi le preferenze anche nel footer del sito e in Impostazioni →
+          Privacy. Ritirare il consenso non rende illecito l’uso fatto prima.
+        </p>
+
+        <h2>Servizi esterni usati dal sito</h2>
+        <h3>GitHub Pages (GitHub, Inc.)</h3>
+        <p>
+          Il sito è ospitato su GitHub Pages. Come ogni server web, GitHub
+          riceve l’indirizzo IP e i dati tecnici della connessione per
+          consegnare le pagine e per la sicurezza del servizio. Maggiori
+          informazioni nella
+          <a
+            href="https://docs.github.com/it/site-policy/privacy-policies/github-general-privacy-statement"
+            target="_blank"
+            rel="noopener"
+            >privacy policy di GitHub</a
+          >.
+        </p>
+        <h3>Google Fonts (Google)</h3>
+        <p>
+          I caratteri Fredoka e DM Sans vengono caricati dai server di Google.
+          Per farlo il browser invia a Google l’indirizzo IP. Google Fonts non
+          imposta cookie.
+        </p>
+        <h3>Google Tag Manager (Google)</h3>
+        <p>
+          È lo strumento che gestisce il caricamento di Google Analytics in base
+          alla tua scelta. Si carica a ogni visita, non imposta cookie e non
+          attiva le statistiche senza il tuo consenso.
+        </p>
+        <p>
+          Informazioni sul trattamento da parte di Google:
+          <a
+            href="https://policies.google.com/privacy?hl=it"
+            target="_blank"
+            rel="noopener"
+            >privacy policy di Google</a
+          >
+          e
+          <a
+            href="https://policies.google.com/technologies/partner-sites?hl=it"
+            target="_blank"
+            rel="noopener"
+            >come Google usa i dati dei siti che usano i suoi servizi</a
+          >.
+        </p>
+        <h3>Link a legami.com</h3>
+        <p>
+          Le schede delle penne in vendita hanno un link al negozio online di
+          Legami, con parametri che indicano solo che arrivi da Penndex. Una
+          volta lì, vale l’informativa di Legami.
+        </p>
+
+        <h2>Perché tratto questi dati</h2>
+        <ul>
+          <li>
+            <strong>Funzionamento del sito</strong> (memoria del browser, cache
+            dell’app): strumenti tecnici necessari, esenti da consenso.
+          </li>
+          <li>
+            <strong>Pubblicazione, sicurezza e caratteri</strong> (GitHub Pages,
+            Google Fonts, Google Tag Manager): legittimo interesse a rendere il
+            sito disponibile, sicuro e leggibile (art. 6.1.f GDPR).
+          </li>
+        </ul>
+
+        <h2>Trasferimento dei dati fuori dall’Unione europea</h2>
+        <p>
+          Google e GitHub possono trattare dati negli Stati Uniti. Il
+          trasferimento avviene sulla base dell’EU-US Data Privacy Framework, a
+          cui le società aderiscono, o delle clausole contrattuali standard
+          approvate dalla Commissione europea.
+        </p>
+
+        <h2>Minori</h2>
+        <p>
+          Penndex può piacere anche ai più giovani. Se hai meno di 14 anni,
+          chiedi a un genitore prima di accettare i cookie di statistica: senza
+          consenso il sito funziona comunque in tutto e per tutto.
+        </p>
+
+        <h2>I tuoi diritti</h2>
+        <p>
+          Puoi chiedere di accedere ai tuoi dati, rettificarli, cancellarli,
+          limitarne il trattamento, opporti al trattamento basato sul legittimo
+          interesse e, dove applicabile, ottenerne la portabilità (artt. 15–22
+          GDPR). Scrivimi all’indirizzo indicato sopra.
+        </p>
+        <p>
+          Tieni presente che i dati della collezione non li ho: sono solo nel
+          tuo browser e puoi gestirli tu direttamente. Per i dati di Google
+          Analytics posso intervenire su richiesta.
+        </p>
+
+        <h2>Modifiche a questa pagina</h2>
+        <p>
+          Se cambio il modo in cui il sito usa i dati, aggiorno questa pagina e
+          la data in alto. Se le modifiche riguardano i cookie, ti chiederò di
+          nuovo il consenso.
+        </p>
+      </main>
+
+      <footer>
+        <p>
+          <a href="./">Penndex</a> · progetto personale di capriol., non
+          affiliato a Legami Milano
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

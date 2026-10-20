@@ -6,9 +6,10 @@
    Non tocca le richieste verso altri siti (Google Fonts, GTM, legami.com)
    e non tocca la collezione, che resta in localStorage.
    Quando cambi la lista CORE, aumenta il numero in CACHE. */
-const CACHE = "penndex-v2";
+const CACHE = "penndex-v3";
 const CORE = [
   "./",
+  "./privacy.html",
   "./manifest.webmanifest",
   "./favicon.svg",
   "./favicon.ico",
@@ -46,18 +47,26 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
 
-  // Pagina: prima la rete, poi la copia salvata
+  // Pagine: prima la rete, poi la copia salvata.
+  // Ogni pagina è salvata con il suo percorso, senza parametri (es. UTM),
+  // e "/penndex/index.html" vale come "/penndex/".
   if (req.mode === "navigate") {
+    const key = new URL(url.pathname.replace(/index\.html$/, ""), url.origin)
+      .href;
     event.respondWith(
       fetch(req)
         .then((res) => {
           if (res.ok) {
             const copy = res.clone();
-            caches.open(CACHE).then((c) => c.put("./", copy));
+            caches.open(CACHE).then((c) => c.put(key, copy));
           }
           return res;
         })
-        .catch(() => caches.match("./")),
+        .catch(() =>
+          caches
+            .match(key)
+            .then((hit) => hit || caches.match(new URL("./", self.location).href)),
+        ),
     );
     return;
   }
