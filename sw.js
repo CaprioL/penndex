@@ -6,7 +6,7 @@
    Non tocca le richieste verso altri siti (Google Fonts, GTM, legami.com)
    e non tocca la collezione, che resta in localStorage.
    Quando cambi la lista CORE, aumenta il numero in CACHE. */
-const CACHE = "penndex-v1";
+const CACHE = "penndex-v2";
 const CORE = [
   "./",
   "./manifest.webmanifest",
