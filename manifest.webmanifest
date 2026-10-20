@@ -1,0 +1,20 @@
+{
+  "id": "/penndex/",
+  "name": "Penndex – Collezione di penne cancellabili",
+  "short_name": "Penndex",
+  "description": "L’album digitale delle penne cancellabili Legami: segna quelle che hai, scopri quelle che ti mancano e annota dove le hai trovate.",
+  "lang": "it",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#e2231a",
+  "categories": ["lifestyle", "utilities"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

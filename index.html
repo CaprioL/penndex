@@ -80,6 +80,8 @@
     <link rel="icon" href="favicon.ico" sizes="48x48" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <meta name="apple-mobile-web-app-title" content="Penndex" />
     <meta name="color-scheme" content="light dark" />
     <title>Penndex – Collezione di penne cancellabili Legami</title>
     <meta
@@ -1467,16 +1469,12 @@
         </p>
         <p class="disclaimer">
           Penndex è un progetto personale, nato per divertimento e senza scopo
-          di lucro.
-          <br />
-          Non è in alcun modo affiliato, collegato o approvato da
+          di lucro. Non è in alcun modo affiliato, collegato o approvato da
           <a
             href="https://www.legami.com/it-it/?utm_source=capriol&utm_medium=penndex"
             target="_blank"
             >Legami Milano (LEGAMI S.p.A.)</a
-          >.
-          <br />
-          Nomi e marchi citati appartengono ai rispettivi proprietari.
+          >. Nomi e marchi citati appartengono ai rispettivi proprietari.
         </p>
         <p class="disclaimer">
           <button class="footer-link" data-action="consent-open">
@@ -1588,9 +1586,10 @@
           </svg>
         </button>
         <p>
-          Penndex usa cookie tecnici necessari al funzionamento del sito. La tua
-          collezione resta nel browser e non viene mai inviata. Puoi cambiare
-          idea quando vuoi da “Preferenze cookie”.
+          Penndex usa i cookie tecnici necessari e, solo con il tuo consenso,
+          cookie di statistica e di marketing gestiti tramite Google Tag
+          Manager. La tua collezione resta nel browser e non viene mai inviata.
+          Puoi cambiare idea quando vuoi da “Preferenze cookie”.
         </p>
         <div class="cookie-opts" id="cookieOpts" hidden>
           <div
@@ -2889,6 +2888,16 @@
 
         render();
         if (!consent) showCookie(false, "auto");
+
+        /* App installabile: registra il service worker (solo online, non in locale) */
+        if (
+          "serviceWorker" in navigator &&
+          (location.protocol === "https:" || location.hostname === "localhost")
+        ) {
+          addEventListener("load", () => {
+            navigator.serviceWorker.register("sw.js").catch(() => {});
+          });
+        }
       })();
     </script>
   </body>
