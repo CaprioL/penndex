@@ -32,7 +32,11 @@
             ad_personalization: m ? "granted" : "denied",
           };
         }
-        window.penndexConsent = { native: native, stored: stored, state: state };
+        window.penndexConsent = {
+          native: native,
+          stored: stored,
+          state: state,
+        };
         if (native) {
           var d = state(false, false);
           d.functionality_storage = "granted";
@@ -40,7 +44,11 @@
           d.wait_for_update = 500;
           gtag("consent", "default", d);
           if (stored)
-            gtag("consent", "update", state(stored.analytics, stored.marketing));
+            gtag(
+              "consent",
+              "update",
+              state(stored.analytics, stored.marketing),
+            );
         }
         dataLayer.push({
           event: "consent_default",
@@ -51,11 +59,18 @@
       })();
     </script>
     <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-TMQRGMMJ');</script>
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-TMQRGMMJ");
+    </script>
     <!-- End Google Tag Manager -->
     <meta
       name="viewport"
@@ -64,21 +79,39 @@
     <meta name="theme-color" content="#e2231a" />
     <meta name="color-scheme" content="light dark" />
     <title>Penndex – Collezione di penne cancellabili Legami</title>
-    <meta name="description" content="L’album digitale delle penne cancellabili Legami: segna quelle che hai, scopri quelle che ti mancano e annota dove le hai trovate. Progetto non ufficiale." />
+    <meta
+      name="description"
+      content="L’album digitale delle penne cancellabili Legami: segna quelle che hai, scopri quelle che ti mancano e annota dove le hai trovate. Progetto non ufficiale."
+    />
     <link rel="canonical" href="https://capriol.github.io/penndex/" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://capriol.github.io/penndex/" />
     <meta property="og:locale" content="it_IT" />
     <meta property="og:site_name" content="Penndex" />
-    <meta property="og:title" content="Penndex – Collezione di penne cancellabili Legami" />
-    <meta property="og:description" content="L’album digitale delle penne cancellabili Legami: segna quelle che hai, scopri quelle che ti mancano e annota dove le hai trovate. Progetto non ufficiale." />
-    <meta property="og:image" content="https://capriol.github.io/penndex/og-image.png" />
+    <meta
+      property="og:title"
+      content="Penndex – Collezione di penne cancellabili Legami"
+    />
+    <meta
+      property="og:description"
+      content="L’album digitale delle penne cancellabili Legami: segna quelle che hai, scopri quelle che ti mancano e annota dove le hai trovate. Progetto non ufficiale."
+    />
+    <meta
+      property="og:image"
+      content="https://capriol.github.io/penndex/og-image.png"
+    />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Logo Penndex: la collezione di penne cancellabili Legami" />
+    <meta
+      property="og:image:alt"
+      content="Logo Penndex: la collezione di penne cancellabili Legami"
+    />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="https://capriol.github.io/penndex/og-image.png" />
+    <meta
+      name="twitter:image"
+      content="https://capriol.github.io/penndex/og-image.png"
+    />
     <script>
       try {
         if (localStorage.getItem("penndex:theme") === "dark")
@@ -1204,8 +1237,14 @@
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TMQRGMMJ"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-TMQRGMMJ"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
     <!-- End Google Tag Manager (noscript) -->
     <div class="strip" id="strip" role="status">Buona caccia alle penne!</div>
 
@@ -1328,7 +1367,7 @@
         <p>
           Made with ♥ by
           <a
-            href="https://www.linkedin.com/in/giacomo-caprioli?utm_source=penndex&utm_medium=penndex&utm_campaign=penndex"
+            href="https://www.linkedin.com/in/giacomo-caprioli?utm_source=capriol&utm_medium=penndex"
             target="_blank"
             >capriol.</a
           >
@@ -1336,8 +1375,11 @@
         <p class="disclaimer">
           Penndex è un progetto personale, nato per divertimento e senza scopo
           di lucro. Non è in alcun modo affiliato, collegato o approvato da
-          Legami Milano (LEGAMI S.p.A.). Nomi e marchi citati appartengono ai
-          rispettivi proprietari.
+          <a
+            href="https://www.legami.com/it-it/?utm_source=capriol&utm_medium=penndex"
+            target="_blank"
+            >Legami Milano (LEGAMI S.p.A.)</a
+          >. Nomi e marchi citati appartengono ai rispettivi proprietari.
         </p>
         <p class="disclaimer">
           <button class="footer-link" data-action="consent-open">
@@ -1451,9 +1493,8 @@
         <p>
           Penndex usa i cookie tecnici necessari e, solo con il tuo consenso,
           cookie di statistica e di marketing gestiti tramite Google Tag
-          Manager. La tua collezione resta
-          nel browser e non viene mai inviata. Puoi cambiare idea quando vuoi da
-          “Preferenze cookie”.
+          Manager. La tua collezione resta nel browser e non viene mai inviata.
+          Puoi cambiare idea quando vuoi da “Preferenze cookie”.
         </p>
         <div class="cookie-opts" id="cookieOpts" hidden>
           <div
@@ -1498,7 +1539,11 @@
         </div>
         <div class="cookie-btns">
           <button class="btn" data-action="consent-reject">Rifiuta</button>
-          <button class="btn wide" data-action="consent-custom" id="cookieCustom">
+          <button
+            class="btn wide"
+            data-action="consent-custom"
+            id="cookieCustom"
+          >
             Personalizza
           </button>
           <button class="btn primary" data-action="consent-accept">
@@ -2363,7 +2408,8 @@
             consent_status: consent ? "stored" : "unset",
             ...consentVars(consent),
           });
-          if (custom) dl({ event: "consent_preferences_open", consent_source: source });
+          if (custom)
+            dl({ event: "consent_preferences_open", consent_source: source });
         }
         function hideCookie() {
           $("#cookie").hidden = true;
@@ -2452,7 +2498,10 @@
             if ($("#cookieOpts").hidden) {
               $("#cookieOpts").hidden = false;
               $("#cookieCustom").textContent = "Salva le scelte";
-              dl({ event: "consent_preferences_open", consent_source: "banner" });
+              dl({
+                event: "consent_preferences_open",
+                consent_source: "banner",
+              });
             } else setConsent(draft.analytics, draft.marketing, "custom_save");
           }
           if (a === "theme") {
