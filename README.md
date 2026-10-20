@@ -52,7 +52,7 @@ Conseguenze da sapere:
 - cancellare i dati di navigazione cancella anche la collezione;
 - per spostarla o metterla al sicuro usa **Impostazioni → Scarica il backup**.
 
-Il sito usa cookie di statistica (Google Analytics, tramite Google Tag Manager) solo se li accetti, e nessun cookie di marketing. Puoi cambiare scelta in qualsiasi momento da **Preferenze cookie**, nel footer o nelle Impostazioni. Tutti i dettagli sono nell’[informativa privacy e cookie](https://capriol.github.io/penndex/privacy.html).
+Tutti i dettagli sono nell’[informativa privacy e cookie](https://capriol.github.io/penndex/privacy.html).
 
 ## Com’è fatto
 
